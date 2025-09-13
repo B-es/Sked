@@ -9,7 +9,7 @@ ThemeData createDarkTheme() {
       ThemeTextStyles.dark,
     ],
     appBarTheme: AppBarTheme(
-      backgroundColor: AppColors.softGrey,
+      color: AppColors.softGrey,
       iconTheme: const IconThemeData(color: AppColors.white),
     ),
   );

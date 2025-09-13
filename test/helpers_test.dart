@@ -19,7 +19,7 @@ void main() {
     });
 
     test("Получение номера учебной недели", () async {
-      final result = getWeekNumber(1, 9);
+      final result = getWeekNumber(1, 9, DateTime(2025, 9, 13));
       expect(result, 2);
     });
   });

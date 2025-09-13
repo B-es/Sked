@@ -7,20 +7,14 @@ import 'package:sked/providers/today_provider.dart';
 import 'package:sked/utils/extensions/build_context_ext.dart';
 import 'package:sked/utils/themes/theme.dart';
 import 'package:sked/view/pages/today_page.dart';
+import 'package:sked/view/pages/week_page.dart';
 
 class MainPage extends ConsumerWidget {
   MainPage({super.key});
 
   final _pages = [
     TodayPage(),
-    Scaffold(
-      body: Center(
-        child: Text(
-          "TODO: ХЕР ВАМ",
-          textAlign: TextAlign.center,
-        ),
-      ),
-    ),
+    WeekPage(),
     Scaffold(
       body: Center(
         child: Text(
@@ -42,9 +36,8 @@ class MainPage extends ConsumerWidget {
           "Sked",
           style: context.text.appName,
         ),
-        //bottomOpacity: .6,
-        elevation: 10,
         shadowColor: AppColors.softRed,
+        elevation: 0,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               bottomRight: Radius.circular(25),
@@ -80,12 +73,9 @@ class MainPage extends ConsumerWidget {
         ),
       ),
       extendBody: true,
-      body: Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: IndexedStack(
-          index: navIndex,
-          children: _pages,
-        ),
+      body: IndexedStack(
+        index: navIndex,
+        children: _pages,
       ),
       bottomNavigationBar: FloatingNavbar(
         iconSize: 18,

@@ -14,7 +14,7 @@ const Map<String, (String, String)> _mapHours = {
   return (first, last);
 }
 
-const days = [
+const daysOfWeek = [
   'ПОНЕДЕЛЬНИК', // 1
   'ВТОРНИК', // 2
   'СРЕДА', // 3
@@ -26,23 +26,22 @@ const days = [
 
 String getWeekdayName(int weekday) {
   if (weekday >= 1 && weekday <= 7) {
-    return days[weekday - 1];
+    return daysOfWeek[weekday - 1];
   } else {
     throw ArgumentError('Weekday must be between 1 and 7');
   }
 }
 
-int getWeekNumber(int startDay, int startMonth) {
-  final now = DateTime.now();
-  final startDate = DateTime(now.year, startMonth, startDay);
+int getWeekNumber(int startDay, int startMonth, DateTime date) {
+  final startDate = DateTime(date.year, startMonth, startDay);
 
   // Разница в днях от начала обучения
-  final difference = now.difference(startDate).inDays;
+  final difference = date.difference(startDate).inDays;
 
   if (difference < 0) {
     // Если дата еще не наступила, считаем от предыдущего года
-    final prevStartDate = DateTime(now.year - 1, startMonth, startDay);
-    final prevDifference = now.difference(prevStartDate).inDays;
+    final prevStartDate = DateTime(date.year - 1, startMonth, startDay);
+    final prevDifference = date.difference(prevStartDate).inDays;
     return (prevDifference ~/ 7) % 2 + 1;
   }
 

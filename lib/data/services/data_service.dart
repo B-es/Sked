@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:sked/data/models/subject_model.dart';
+import 'package:sked/utils/helpers.dart';
 
 class DataService {
   final String jsonDataPath = "assets/formatted.json";
@@ -35,5 +36,19 @@ class DataService {
     }
 
     return resModels;
+  }
+
+  Map<String, List<SubjectModel>> getWeekModels(final int week) {
+    Map<String, List<SubjectModel>> map = {};
+    for (final dayOfWeek in daysOfWeek) {
+      List<SubjectModel> resModels = [];
+      condition(m) => m.dayOfWeek == dayOfWeek && m.week == week;
+      for (final SubjectModel model in models.where(condition)) {
+        final bool isSapr11 = model.groups.contains(groupName);
+        if (isSapr11) resModels.add(model);
+      }
+      map[dayOfWeek] = resModels;
+    }
+    return map;
   }
 }

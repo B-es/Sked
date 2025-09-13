@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sked/providers/today_provider.dart';
-import 'package:sked/subject_widget.dart';
-import 'package:sked/utils/extensions/build_context_ext.dart';
-import 'package:sked/utils/themes/theme.dart';
+import 'package:sked/view/widgets/load_indicator.dart';
+import 'package:sked/view/widgets/place_holder.dart';
+import 'package:sked/view/widgets/subject_widget.dart';
 
 class TodayPage extends ConsumerWidget {
   const TodayPage({super.key});
@@ -13,27 +13,11 @@ class TodayPage extends ConsumerWidget {
     final todayModelsAsync = ref.watch(todayModelsProvider);
 
     return todayModelsAsync.when(
-        loading: () => CircularProgressIndicator(
-              color: Colors.red,
-            ),
+        loading: () => LoadIndicator(),
         error: (error, stackTrace) => Text("Ошибка: $error"),
         data: (models) {
           if (models.isEmpty) {
-            return Center(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "Отдыхай",
-                  style: context.text.appName,
-                ),
-                Icon(
-                  Icons.psychology,
-                  color: context.text.appName.color,
-                ),
-              ],
-            ));
+            return PlaceHolder();
           }
 
           return ListView.builder(
