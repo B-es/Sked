@@ -18,22 +18,22 @@ class _WeekPageState extends ConsumerState<WeekPage> {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime currentDate = ref.read(currentDateProvider);
-    final AsyncValue weekModelsAsync =
-        ref.watch(weekModelsProvider(currentDate));
+    final AsyncValue weekModelsAsync = ref.watch(weekModelsProvider);
+    final currentDate = ref.watch(currentDateProvider);
 
     return weekModelsAsync.when(
         loading: () => LoadIndicator(),
         error: (error, stackTrace) => Text("Ошибка: $error"),
-        data: (maps) {
-          if (maps.isEmpty) {
+        data: (models) {
+          if (models.isEmpty) {
             return PlaceHolder();
           }
 
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (itemScrollController.isAttached) {
               itemScrollController.scrollTo(
-                index: DateTime.now().weekday - 1,
+                index:
+                    currentDate.weekday - 1 == 6 ? 0 : currentDate.weekday - 1,
                 duration: const Duration(seconds: 2),
                 curve: Curves.easeInOutCubicEmphasized,
               );
@@ -46,10 +46,9 @@ class _WeekPageState extends ConsumerState<WeekPage> {
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),
               itemScrollController: itemScrollController,
-              itemCount: maps.length,
+              itemCount: models.length,
               itemBuilder: (_, i) => WeekSubjectsWidget(
-                dayName: maps.keys.elementAt(i),
-                subjects: maps.values.elementAt(i),
+                model: models[i],
               ),
             ),
           );

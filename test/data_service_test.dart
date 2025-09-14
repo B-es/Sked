@@ -27,8 +27,8 @@ void main() {
     });
 
     test("Получение моделей недели", () async {
-      final models = dataService.getWeekModels(1);
-      expect(models.length, 7);
+      final models = dataService.getWeekModels(1, DateTime.now());
+      expect(models.length, 6);
     });
   });
 }

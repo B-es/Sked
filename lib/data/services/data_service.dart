@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:sked/data/models/subject_model.dart';
+import 'package:sked/data/models/week_subject_model.dart';
 import 'package:sked/utils/helpers.dart';
 
 class DataService {
@@ -38,17 +39,27 @@ class DataService {
     return resModels;
   }
 
-  Map<String, List<SubjectModel>> getWeekModels(final int week) {
-    Map<String, List<SubjectModel>> map = {};
-    for (final dayOfWeek in daysOfWeek) {
+  List<WeekSubjectModel> getWeekModels(
+    final int week,
+    final DateTime now,
+  ) {
+    List<String> dates = generateWeekDaysList(now);
+    List<WeekSubjectModel> res = [];
+    for (final dayOfWeek in daysOfWeek.sublist(0, daysOfWeek.length - 1)) {
+      final date = dates[daysOfWeek.indexOf(dayOfWeek)];
       List<SubjectModel> resModels = [];
       condition(m) => m.dayOfWeek == dayOfWeek && m.week == week;
       for (final SubjectModel model in models.where(condition)) {
+        final bool isContained = model.dates.contains(date);
         final bool isSapr11 = model.groups.contains(groupName);
-        if (isSapr11) resModels.add(model);
+        if (isContained && isSapr11) resModels.add(model);
       }
-      map[dayOfWeek] = resModels;
+      res.add(WeekSubjectModel(
+        dayName: dayOfWeek,
+        subjects: resModels,
+        date: date,
+      ));
     }
-    return map;
+    return res;
   }
 }

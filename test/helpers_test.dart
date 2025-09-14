@@ -22,5 +22,13 @@ void main() {
       final result = getWeekNumber(1, 9, DateTime(2025, 9, 13));
       expect(result, 2);
     });
+
+    test("Получение  списка дней с понедельника по субботу на основе дня",
+        () async {
+      final date = DateTime(2025, 9, 20);
+      final result = generateWeekDaysList(date);
+      expect(result.length, 6);
+      expect(result[0], "15.09");
+    });
   });
 }

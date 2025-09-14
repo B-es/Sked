@@ -15,7 +15,6 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeBrigthness = ref.watch(themeProvider);
-
     return MaterialApp(
         title: 'Sked',
         theme: themeBrigthness == Brightness.dark

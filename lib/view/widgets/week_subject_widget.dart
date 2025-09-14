@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sked/data/models/subject_model.dart';
+import 'package:sked/data/models/week_subject_model.dart';
 import 'package:sked/utils/extensions/build_context_ext.dart';
 
 import 'place_holder.dart';
@@ -8,12 +9,10 @@ import 'subject_widget.dart';
 class WeekSubjectsWidget extends StatelessWidget {
   const WeekSubjectsWidget({
     super.key,
-    required this.dayName,
-    required this.subjects,
+    required this.model,
   });
 
-  final String dayName;
-  final List<SubjectModel> subjects;
+  final WeekSubjectModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +36,13 @@ class WeekSubjectsWidget extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                dayName,
+                "${model.dayName} ${model.date}",
                 style: context.text.appName.copyWith(fontSize: 18),
                 textAlign: TextAlign.start,
               ),
             ),
             Divider(),
-            getSubjectWidgetList(subjects)
+            getSubjectWidgetList(model.subjects)
           ],
         ),
       ),

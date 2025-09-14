@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:sked/data/models/subject_model.dart';
 import 'package:sked/providers/data_provider.dart';
+import 'package:sked/providers/week_provider.dart';
 import 'package:sked/utils/helpers.dart';
 
 final todayModelsProvider = FutureProvider<List<SubjectModel>>((ref) async {
@@ -16,5 +17,6 @@ final todayModelsProvider = FutureProvider<List<SubjectModel>>((ref) async {
 });
 
 final todayWeekNumberProvider = StateProvider<int>((ref) {
-  return getWeekNumber(1, 9, DateTime.now());
+  DateTime date = ref.watch(currentDateProvider);
+  return getWeekNumber(1, 9, date);
 });

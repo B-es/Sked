@@ -48,3 +48,19 @@ int getWeekNumber(int startDay, int startMonth, DateTime date) {
   // Вычисляем номер недели (1 или 2)
   return (difference ~/ 7) % 2 + 1;
 }
+
+List<String> generateWeekDaysList(DateTime now) {
+  // Находим понедельник текущей недели
+  DateTime monday = now.subtract(Duration(days: now.weekday - 1));
+
+  // Создаем список дней с понедельника по субботу
+  List<String> result = [];
+
+  for (int i = 0; i < 6; i++) {
+    DateTime currentDay = monday.add(Duration(days: i));
+    result.add('${currentDay.day.toString().padLeft(2, '0')}.'
+        '${currentDay.month.toString().padLeft(2, '0')}');
+  }
+
+  return result;
+}
