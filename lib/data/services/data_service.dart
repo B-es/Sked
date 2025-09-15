@@ -27,11 +27,15 @@ class DataService {
 
   final String groupName = "САПР-1.1";
 
-  List<SubjectModel> get getTodayModels {
-    DateTime now = DateTime.now();
+  String normalizeDateNumber(int number) {
+    return number > 9 ? "$number" : "0$number";
+  }
+
+  List<SubjectModel> getTodayModels(final DateTime now) {
     List<SubjectModel> resModels = [];
     for (final SubjectModel model in models) {
-      final bool isContained = model.dates.contains("${now.day}.${now.month}");
+      final bool isContained = model.dates.contains(
+          "${normalizeDateNumber(now.day)}.${normalizeDateNumber(now.month)}");
       final bool isSapr11 = model.groups.contains(groupName);
       if (isContained && isSapr11) resModels.add(model);
     }

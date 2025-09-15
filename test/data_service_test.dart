@@ -22,7 +22,7 @@ void main() {
     });
 
     test("Получение сегодняшних моделей", () async {
-      final models = dataService.getTodayModels;
+      final models = dataService.getTodayModels(DateTime.now());
       expect(models.length, 0);
     });
 

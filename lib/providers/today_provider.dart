@@ -8,12 +8,11 @@ import 'package:sked/utils/helpers.dart';
 final todayModelsProvider = FutureProvider<List<SubjectModel>>((ref) async {
   final isInitialized = await ref.watch(dataInitializedProvider.future);
   final dataService = ref.read(dataServiceProvider);
-
   if (!isInitialized) {
     throw Exception('Data service not initialized');
   }
-
-  return dataService.getTodayModels;
+  DateTime date = ref.watch(currentDateProvider);
+  return dataService.getTodayModels(date);
 });
 
 final todayWeekNumberProvider = StateProvider<int>((ref) {
